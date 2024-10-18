@@ -49,6 +49,7 @@ async function main() {
       await checkConnection();
       break;
     case "reset-db":
+      await MovieModel.deleteMany();
       break;
     case "bulk-insert":
       const data = fs.readFileSync("./seed.json");
