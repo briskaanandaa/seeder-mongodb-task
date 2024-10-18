@@ -48,15 +48,24 @@ async function main() {
     case "check-db-connection":
       await checkConnection();
       break;
+    // Melakukan Reset pada DB
     case "reset-db":
       await MovieModel.deleteMany();
       break;
+    // Memasukkan data pada ./seed.json yang telah disediakan
     case "bulk-insert":
       const data = fs.readFileSync("./seed.json");
       const parsed = JSON.parse(data);
       console.log(JSON.parse(data));
       await MovieModel.insertMany(parsed);
       break;
+    // Digunakan untuk mendapatkan seluruh data yang terdapat pada collection
+    case "get-all":
+      const allMovies = await MovieModel.find({});
+      console.log("All movies:", allMovies);
+      return allMovies;
+      break;
+    // Digunakan jika command yang dimasukkan tidak ditemukan
     default:
       throw Error("command not found");
   }
